@@ -2,7 +2,14 @@
   box-sizing: border-box;
 }
 
+@-moz-document url-prefix() {
+  html {
+    scrollbar-width: none;
+  }
+}
+
 body::-webkit-scrollbar {
+  width: 0;
   display: none;
 }
 
@@ -13,6 +20,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
   padding: 1.2rem;
+  scrollbar-width: none;
 }
 
 .container {

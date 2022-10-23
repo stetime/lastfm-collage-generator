@@ -1,4 +1,5 @@
 *.md
+.env
 .git 
 .cache
 .gitignore
