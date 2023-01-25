@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,8 @@
     "winston": "^3.8.2"
   },
   "devDependencies": {
-    "dotenv": "^16.0.3"
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "eslint": "^8.26.0"
   }
 }

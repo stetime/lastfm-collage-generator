@@ -1,6 +1,6 @@
 const config = require('./utils/config')
 const axios = require('axios')
-const { createCanvas } = require('canvas')
+const { createCanvas, registerFont } = require('canvas')
 const { createCollage } = require('@mtblc/image-collage')
 const logger = require('./utils/logger')
 
@@ -41,15 +41,21 @@ const generateCollage = async (user) => {
 }
 
 const generateFiller = (album) => {
+  registerFont('./assets/fonts/roboto.ttf', { family: 'Roboto' })
+  registerFont('./assets/fonts/robotobold.ttf', { family: 'Roboto Bold' })
+  registerFont('./assets/fonts/notosans.ttf', { family: 'Noto Sans' })
   const width = 300
   const height = 300
   const canvas = createCanvas(width, height)
   const context = canvas.getContext('2d')
   context.fillStyle = '#000000'
   context.fillRect(0, 0, width, height)
-  context.font = `10pt 'Unifont`
+  context.font = '15px Roboto, Noto Sans'
   context.fillStyle = '#fff'
-  context.fillText(`${album.artist} - ${album.name}`, 05, 20)
+  context.fillText(`${album.artist}`, 10, 240)
+  context.measureText(album.name.length).width < 275
+    ? context.fillText(`${album.name}`, 10, 260)
+    : context.fillText(`${album.name.slice(0, 35)}...`, 10, 260)
   return canvas.toBuffer('image/jpeg')
 }
 

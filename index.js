@@ -3,6 +3,7 @@ const express = require('express')
 const middleware = require('./utils/middleware')
 const lastfm = require('./lastfm')
 const path = require('path')
+const logger = require('./utils/logger')
 
 const app = express()
 app.use(express.static(path.join(__dirname, 'public')))
@@ -24,5 +25,5 @@ app.get('/api/:username/:duration', async (req, res) => {
 
 app.use(middleware.unknownEndpoint)
 app.listen(config.PORT, () => {
-  console.log(`listening on ${config.PORT}`)
+  logger.info(`listening on ${config.PORT}`)
 })
