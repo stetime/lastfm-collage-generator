@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Last.fm Collage Generator</title>
+    <link rel="stylesheet" href="/styles/wow.css" />
+    <meta name="theme-color" content="#BA0000" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="title">
+        <span class="lfm">Last.fm </span> Collage Generator
+      </div>
+      <div class="album-group">
+        <div class="album"></div>
+        <div class="album"></div>
+        <div class="album"></div>
+        <div class="album"></div>
+      </div>
+      <div class="footer" id="footer">
+        <p>
+          Generate an <i>enormous</i> collage of artwork from the albums you've
+          been listening to.
+        </p>
+        <form id="collage">
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="username"
+          />
+          <select name="duration" id="duration" form="collage" title="duration">
+            <option value="7day" selected>This Week</option>
+            <option value="1month">This Month</option>
+            <option value="3month">Previous Three Months</option>
+            <option value="6month">Previous Six Months</option>
+            <option value="12month">This Year</option>
+            <option value="overall">All Time</option>
+          </select>
+          <p></p>
+          <button id="submit">Generate</button>
+        </form>
+      </div>
+    </div>
+    <script src="js/collage.js"></script>
+  </body>
+</html>

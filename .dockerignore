@@ -1,6 +1,1 @@
-*.md
-.env
-.git 
-.cache
-.gitignore
 node_modules

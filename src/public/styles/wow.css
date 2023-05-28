@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+}
+
+@-moz-document url-prefix() {
+  html {
+    scrollbar-width: none;
+  }
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+
+body {
+  background-color: #18191a;
+  color: #fafafa;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
+  padding: 1.2rem;
+  scrollbar-width: none;
+}
+
+.container {
+  height: 100vh;
+  display: grid;
+  justify-items: center;
+  align-items: start;
+  grid-template-rows: 1fr 1fr 0.5r;
+  grid-row-gap: 0;
+  margin: auto;
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  text-align: right;
+  line-height: 0.9;
+}
+
+.lfm {
+  color: #ba0000;
+}
+
+.album-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.album {
+  width: 30vh;
+  height: 30vh;
+  position: absolute;
+  aspect-ratio: 1/1;
+  animation-duration: 1s;
+  animation-timing-function: cubic-bezier(0.9, 0.43, 0.25, 0.95);
+  animation-fill-mode: forwards;
+  background-size: cover;
+}
+
+.album:nth-of-type(1) {
+  background-image: url('../images/0a3b990e7b81447f8dd919219eadba08.png');
+  animation-name: fanout1;
+}
+.album:nth-of-type(2) {
+  background-image: url('../images/1f72d552a03515791c7806995a951487.jpg');
+  animation-name: fanout2;
+}
+.album:nth-of-type(3) {
+  background-image: url('../images/c01d472cd7599a480124ab11a2e84347.jpg');
+  animation-name: fanout3;
+}
+.album:nth-of-type(4) {
+  background-image: url('../images/a2498c7f888a5d29e2cb3dcfaf8514bc.jpg');
+  animation-name: fanout4;
+}
+
+.footer {
+  text-align: center;
+}
+
+input[type='text'],
+select {
+  padding: 8px;
+  background-color: #18191a;
+  outline: 0;
+  border: 1px #fafafa;
+  border-style: none none solid none;
+  color: white;
+  margin: 3px;
+  border-radius: 0;
+  -webkit-appearance: none;
+  vertical-align: bottom;
+}
+
+input,
+select,
+button {
+  height: 2rem;
+}
+
+select:not(:focus) {
+  color: #757575;
+}
+
+button {
+  padding: 8px;
+  background-color: #ba0000;
+  color: #fafafa;
+  border: 0;
+  display: inline-block;
+  font-weight: bold;
+}
+
+button:hover {
+  background-color: #6e0000;
+}
+
+@media only screen and (max-width: 799px) {
+  .album {
+    height: 25vh;
+    width: 25vh;
+  }
+}
+
+@keyframes fanout1 {
+  to {
+    transform: translate(-75%, 16%) rotate(-24deg);
+  }
+}
+@keyframes fanout2 {
+  to {
+    transform: translate(-25%, 8%) rotate(-8deg);
+  }
+}
+@keyframes fanout3 {
+  to {
+    transform: translate(25%, 8%) rotate(8deg);
+  }
+}
+@keyframes fanout4 {
+  to {
+    transform: translate(75%, 16%) rotate(-24deg);
+  }
+}

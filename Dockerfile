@@ -1,8 +1,23 @@
-FROM ubuntu
-RUN apt-get update
-RUN apt-get -y install unifont git python3 g++ make nodejs npm
+FROM node:lts-alpine
 WORKDIR /app
-COPY package.json ./
+
+RUN apk add --update --no-cache \
+  make \
+  g++ \
+  jpeg-dev \
+  cairo-dev \
+  giflib-dev \
+  pango-dev \
+  libtool \
+  autoconf \
+  automake \
+  python3 \
+  unifont 
+
+COPY package.json .
 RUN npm install
-COPY . .
-CMD ["node", "index.js"]
+COPY --chown=node:node . .
+EXPOSE 3000
+RUN npm run build
+USER node
+CMD ["node", "dist/index.js"]
