@@ -1,7 +1,6 @@
 import Canvas from 'canvas'
 import { Buffer } from 'buffer'
 import logger from './utils/logger'
-import { User } from './utils/types'
 import axios from 'axios'
 
 function getPlaceHolder(imageWidth: number, imageHeight: number) {

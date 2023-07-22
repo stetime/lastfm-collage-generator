@@ -1,5 +1,4 @@
 import logger from './utils/logger'
-import { User, LastfmResponse } from './utils/types'
 import axios from 'axios'
 const { LFMKEY, BASEURL } = process.env
 
