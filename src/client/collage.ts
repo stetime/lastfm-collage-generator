@@ -1,4 +1,4 @@
-const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+const b64toBlob = (b64Data: string, contentType = '', sliceSize = 512) => {
   const byteCharacters = atob(b64Data)
   const byteArrays = []
   for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
@@ -16,10 +16,13 @@ const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
 
 const form = document.querySelector('#collage')
 
-form.addEventListener('submit', async (event) => {
+form!.addEventListener('submit', async (event) => {
   event.preventDefault()
-  const username = event.target.username.value
-  const duration = event.target.duration.value
+  if (!event.target) {
+    return
+  }
+  const username = (event.target as HTMLFormElement).username.value
+  const duration = (event.target as HTMLFormElement).duration.value
   const response = await fetch(`/api/${username}/${duration}`)
   if (response.status === 404) {
     showErrorMessage('404: no such user')
@@ -35,14 +38,14 @@ form.addEventListener('submit', async (event) => {
   window.location.href = collageUrl
 })
 
-const showErrorMessage = (message) => {
+const showErrorMessage = (message: string) => {
   const formContainer = document.querySelector('#footer')
   const error = document.createElement('p')
   const node = document.createTextNode(message)
   error.appendChild(node)
   error.classList.add('error_text')
-  formContainer.appendChild(error)
+  formContainer!.appendChild(error)
   setTimeout(() => {
-    formContainer.removeChild(error)
+    formContainer!.removeChild(error)
   }, 5000)
 }
