@@ -3,7 +3,7 @@
   "ignore": ["node_modules/"],
   "watch": ["src/"],
   "execMap": {
-    "ts": "ts-node-esm --files"
+    "ts": "ts-node --files"
   },
   "env": {
     "NODE_ENV": "development"
