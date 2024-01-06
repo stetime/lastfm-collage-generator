@@ -5,3 +5,4 @@ Thumbs.db
 dist/**/*
 .vscode
 notes.md
+src/public/js/*
