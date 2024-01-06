@@ -7,11 +7,13 @@ import morgan from './middleware/morgan'
 import limiter from './middleware/rateLimit'
 import unknownEndpoint from './middleware/unknownEndpoint'
 import TTLCache from '@isaacs/ttlcache'
+import compression from 'compression'
 
 const cache = new TTLCache<String, User>({ ttl: 1000 * 60 * 60 * 24 })
 
 const app = express()
 const port = 3000
+app.use(compression())
 app.use(express.static(path.join(__dirname, '../src/public')))
 app.use(morgan)
 app.use(limiter)
