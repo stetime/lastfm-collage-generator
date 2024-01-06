@@ -6,6 +6,9 @@ import getCollage from './collage'
 import morgan from './middleware/morgan'
 import limiter from './middleware/rateLimit'
 import unknownEndpoint from './middleware/unknownEndpoint'
+import TTLCache from '@isaacs/ttlcache'
+
+const cache = new TTLCache<String, User>({ ttl: 1000 * 60 * 60 * 24 })
 
 const app = express()
 const port = 3000
@@ -19,11 +22,19 @@ app.get('/', (req, res) => {
 
 app.get('/api/:username/:duration', async (req, res) => {
   const { username, duration } = req.params
+  const cacheKey = `${username}:${duration}`
+  const cachedUser = cache.get(cacheKey)
+  if (cachedUser) {
+    logger.debug(`retrieving data from cache for ${cacheKey}`)
+    logger.debug(`remaining TTL: ${cache.getRemainingTTL(cacheKey)}`)
+    return res.json(cachedUser)
+  }
   const user = await getUser(username, duration)
   if (!user) {
     return res.status(404).end()
   }
   user.b64 = await getCollage(user)
+  cache.set(cacheKey, user)
   res.json(user)
 })
 

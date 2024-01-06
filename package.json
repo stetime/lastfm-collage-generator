@@ -13,6 +13,7 @@
   "author": "Stephen Allen",
   "license": "MIT",
   "dependencies": {
+    "@isaacs/ttlcache": "^1.4.1",
     "axios": "^1.3.5",
     "canvas": "^2.11.0",
     "cors": "^2.8.5",
