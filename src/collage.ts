@@ -56,17 +56,17 @@ async function createCollage(user: User) {
       ctx.textBaseline = 'top'
       const artistX = col * imageWidth + 4
       const artistY = row * imageHeight + 0
-      ctx.strokeText(album.artist, artistX, artistY) // Add the text outline
+      ctx.strokeText(album.artist, artistX, artistY)
       ctx.fillText(album.artist, artistX, artistY)
       ctx.font = '16px Unifont'
       const titleX = col * imageWidth + 4
       const titleY = row * imageHeight + 16
-      ctx.strokeText(album.title, titleX, titleY) // Add the text outline
+      ctx.strokeText(album.title, titleX, titleY)
       ctx.fillText(album.title, titleX, titleY)
     }
   }
 
-  return canvas.toBuffer('image/png').toString('base64')
+  return canvas.toBuffer('image/jpeg', { quality: 1 }).toString('base64')
 }
 
 export default createCollage
