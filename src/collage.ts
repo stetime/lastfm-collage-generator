@@ -14,18 +14,23 @@ function getPlaceHolder(imageWidth: number, imageHeight: number) {
 async function createCollage(user: User) {
   logger.debug(user.albums.length)
   let canvasSize = [1200, 1200]
+  let imagesPerRow = 4
   if (user.albums.length < 16 && user.albums.length >= 12) {
     canvasSize = [1200, 900]
   }
   if (user.albums.length < 12) {
     canvasSize = [900, 900]
+    imagesPerRow = 3
+  }
+  if (user.albums.length < 8) {
+    canvasSize = [900, 600]
+    imagesPerRow = 3
   }
   const [x, y] = canvasSize
   const canvas = Canvas.createCanvas(x, y)
   const ctx = canvas.getContext('2d')
   const imageWidth = 300
   const imageHeight = 300
-  const imagesPerRow = 4
   const images = user.albums.map((album) => album.image)
   if (images.length < 1) {
     return
