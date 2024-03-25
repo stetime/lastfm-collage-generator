@@ -40,18 +40,22 @@ app.get('/api/:username/:duration', async (req, res) => {
   res.json(user)
 })
 
-app.get('/image/:username/:duration', async (req, res) => {
-  const { username, duration } = req.params
-  const user = await getUser(username, duration)
-  if (!user || user.albums.length === 0) {
-    return res.status(404).send(`no listening data for ${req.params.username}`)
-  }
-  const base64 = await getCollage(user)
-  user.b64 = `data:image/png;base64,${base64}`
-  const buffer = Buffer.from(user.b64.split(',')[1], 'base64')
-  res.type('jpeg')
-  res.send(buffer)
-})
+if (process.env.NODE_ENV === 'development') {
+  app.get('/image/:username/:duration', async (req, res) => {
+    const { username, duration } = req.params
+    const user = await getUser(username, duration)
+    if (!user || user.albums.length === 0) {
+      return res
+        .status(404)
+        .send(`no listening data for ${req.params.username}`)
+    }
+    const base64 = await getCollage(user)
+    user.b64 = `data:image/png;base64,${base64}`
+    const buffer = Buffer.from(user.b64.split(',')[1], 'base64')
+    res.type('jpeg')
+    res.send(buffer)
+  })
+}
 
 app.use(unknownEndpoint)
 
