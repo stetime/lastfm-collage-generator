@@ -3,20 +3,23 @@ import path from 'path'
 import logger from './utils/logger'
 import getUser from './lastfm'
 import getCollage from './collage'
-import morgan from './middleware/morgan'
+import helmet from 'helmet'
 import limiter from './middleware/rateLimit'
 import unknownEndpoint from './middleware/unknownEndpoint'
 import TTLCache from '@isaacs/ttlcache'
 import compression from 'compression'
+import PinoHttp from 'pino-http'
 
 const cache = new TTLCache<String, User>({ ttl: 1000 * 60 * 60 * 24 })
 
 const app = express()
-const port = 3000
+const port = process.env.PORT
 app.use(compression())
 app.use(express.static(path.join(__dirname, '../src/public')))
-app.use(morgan)
+app.use(helmet())
+// app.use(morgan)
 app.use(limiter)
+app.use(PinoHttp())
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../src/public/home.html'))
@@ -60,5 +63,5 @@ if (process.env.NODE_ENV === 'development') {
 app.use(unknownEndpoint)
 
 app.listen(port, () => {
-  logger.info('listening on 3000')
+  logger.info(`listening on port: ${port}`)
 })
