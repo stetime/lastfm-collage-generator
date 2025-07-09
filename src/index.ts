@@ -21,13 +21,20 @@ if (!process.env.BASEURL) {
 }
 
 const cache = new TTLCache<String, User>({ ttl: 1000 * 60 * 60 * 24 })
+const validDurations = [
+  "7day",
+  "1month",
+  "3month",
+  "6month",
+  "12month",
+  "overall",
+]
 
 const app = express()
 const port = process.env.PORT
 app.use(compression())
 app.use(express.static(path.join(__dirname, "../src/public")))
 app.use(helmet())
-// app.use(morgan)
 app.use(limiter)
 app.use(PinoHttp())
 
@@ -37,6 +44,9 @@ app.get("/", (req, res) => {
 
 app.get("/api/:username/:duration", async (req, res) => {
   const { username, duration } = req.params
+  if (!validDurations.includes(duration)) {
+    return res.status(400).send(`invalid duration: ${duration}`)
+  }
   const cacheKey = `${username}:${duration}`
   const cachedUser = cache.get(cacheKey)
   if (cachedUser) {
