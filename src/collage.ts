@@ -1,14 +1,14 @@
-import Canvas from "canvas"
+import { createCanvas, loadImage } from "@napi-rs/canvas"
 import { Buffer } from "buffer"
 import logger from "./utils/logger"
 import axios from "axios"
 
 function getPlaceHolder(imageWidth: number, imageHeight: number) {
-  const canvas = Canvas.createCanvas(imageWidth, imageHeight)
+  const canvas = createCanvas(imageWidth, imageHeight)
   const context = canvas.getContext("2d")
   context.fillStyle = "black"
   context.fillRect(0, 0, imageWidth, imageHeight)
-  return canvas.toBuffer()
+  return canvas.toBuffer("image/png")
 }
 
 async function createCollage(user: User): Promise<string | undefined> {
@@ -27,7 +27,7 @@ async function createCollage(user: User): Promise<string | undefined> {
     imagesPerRow = 3
   }
   const [x, y] = canvasSize
-  const canvas = Canvas.createCanvas(x, y)
+  const canvas = createCanvas(x, y)
   const ctx = canvas.getContext("2d")
   const imageWidth = 300
   const imageHeight = 300
@@ -58,7 +58,7 @@ async function createCollage(user: User): Promise<string | undefined> {
     const row = Math.floor(i / imagesPerRow)
     const col = i % imagesPerRow
     const buffer = imageBuffers[i]
-    const img = await Canvas.loadImage(buffer)
+    const img = await loadImage(buffer)
     ctx.drawImage(
       img,
       col * imageWidth,
@@ -83,7 +83,7 @@ async function createCollage(user: User): Promise<string | undefined> {
     }
   }
 
-  return canvas.toBuffer("image/jpeg", { quality: 1 }).toString("base64")
+  return (await canvas.encode("jpeg", 100)).toString("base64")
 }
 
 export default createCollage
