@@ -1,7 +1,6 @@
 import { createCanvas, loadImage } from "@napi-rs/canvas"
 import { Buffer } from "buffer"
 import logger from "./utils/logger"
-import axios from "axios"
 
 function getPlaceHolder(imageWidth: number, imageHeight: number) {
   const canvas = createCanvas(imageWidth, imageHeight)
@@ -42,11 +41,14 @@ async function createCollage(user: User): Promise<string | undefined> {
         return getPlaceHolder(imageWidth, imageHeight)
       }
       try {
-        const result = await axios.get(imageUrl, {
-          responseType: "arraybuffer",
-          timeout: 5000,
+        const res = await fetch(imageUrl, {
+          signal: AbortSignal.timeout(5000),
         })
-        return Buffer.from(result.data, "binary")
+        if (!res.ok) {
+          throw new Error(`HTTP error: status ${res.status}`)
+        }
+        const arrayBuffer = await res.arrayBuffer()
+        return Buffer.from(arrayBuffer)
       } catch (error) {
         logger.error(`failed to fetch image: ${imageUrl}`, error)
         return getPlaceHolder(imageWidth, imageHeight)

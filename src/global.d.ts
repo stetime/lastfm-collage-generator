@@ -1,4 +1,4 @@
-import {AxiosResponse} from 'axios'
+import { AxiosResponse } from "axios"
 export {}
 
 declare global {
@@ -21,7 +21,7 @@ declare global {
     name: string
     image: {
       size: string
-      '#text': string
+      "#text": string
     }[]
   }
 
@@ -30,6 +30,4 @@ declare global {
       album: LastfmAlbum[]
     }
   }
-
-  type LastfmResponse = AxiosResponse<Fmdata>
 }

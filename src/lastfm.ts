@@ -1,5 +1,5 @@
 import logger from "./utils/logger"
-import axios from "axios"
+
 const { LFMKEY, BASEURL } = process.env
 
 async function getUser(username: string, duration: string) {
@@ -7,8 +7,16 @@ async function getUser(username: string, duration: string) {
   logger.debug(
     `attempting to fetch last.fm api data for user: ${username} - duration: ${duration}`
   )
-  const response: LastfmResponse = await axios.get(endpoint, { timeout: 5000 })
-  const albums = response.data.topalbums.album
+  const response = await fetch(endpoint, {
+    signal: AbortSignal.timeout(5000),
+  })
+
+  if (!response.ok) {
+    throw new Error(`HTTP error: status ${response.status}`)
+  }
+
+  const data: Fmdata = await response.json()
+  const albums = data.topalbums.album
   const user: User = { username: username, albums: [], b64: undefined }
   user.albums = albums
     .map((album) => {
