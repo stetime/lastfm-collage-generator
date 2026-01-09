@@ -4,7 +4,6 @@ import logger from "./utils/logger"
 import getUser from "./lastfm"
 import getCollage from "./collage"
 import helmet from "helmet"
-import limiter from "./middleware/rateLimit"
 import unknownEndpoint from "./middleware/unknownEndpoint"
 import TTLCache from "@isaacs/ttlcache"
 import compression from "compression"
@@ -35,7 +34,6 @@ const port = process.env.PORT || 3000
 app.use(compression())
 app.use(express.static(path.join(__dirname, "../src/public")))
 app.use(helmet())
-app.use(limiter)
 app.use(PinoHttp())
 
 app.get("/", (req, res) => {
