@@ -1,13 +1,13 @@
-import express from "express"
-import path from "path"
-import logger from "./utils/logger"
-import getUser from "./lastfm"
-import getCollage from "./collage"
-import helmet from "helmet"
-import unknownEndpoint from "./middleware/unknownEndpoint"
 import TTLCache from "@isaacs/ttlcache"
 import compression from "compression"
+import express from "express"
+import helmet from "helmet"
+import path from "path"
 import PinoHttp from "pino-http"
+import getCollage from "./collage"
+import getUser from "./lastfm"
+import unknownEndpoint from "./middleware/unknownEndpoint"
+import logger from "./utils/logger"
 
 if (!process.env.LFMKEY) {
   logger.error("Last.fm API key not set in environment variables")
@@ -19,7 +19,7 @@ if (!process.env.BASEURL) {
   process.exit(1)
 }
 
-const cache = new TTLCache<String, User>({ ttl: 1000 * 60 * 60 * 24 })
+const cache = new TTLCache<string, User>({ ttl: 1000 * 60 * 60 * 24 })
 const validDurations = [
   "7day",
   "1month",
