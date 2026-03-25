@@ -1,8 +1,8 @@
 import TTLCache from "@isaacs/ttlcache";
 import { Hono } from "hono";
 import { serveStatic } from "hono/bun";
-import getCollage from "./collage";
 import getUser from "./lastfm";
+import { WorkerPool } from "./lib/worker-pool";
 import logger from "./utils/logger";
 
 if (!process.env.LFMKEY) {
@@ -24,6 +24,11 @@ const validDurations = [
 	"12month",
 	"overall",
 ];
+
+const pool = new WorkerPool(
+	navigator.hardwareConcurrency ?? 4,
+	new URL("./lib/collage-worker.ts", import.meta.url),
+);
 
 const app = new Hono();
 const port = process.env.PORT || 3000;
@@ -49,7 +54,7 @@ app.get("/api/:username/:duration", async (c) => {
 	if (!user) {
 		return c.notFound();
 	}
-	user.b64 = await getCollage(user);
+	user.b64 = await pool.run(user);
 	cache.set(cacheKey, user);
 	return c.json(user);
 });
