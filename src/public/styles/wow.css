@@ -24,14 +24,24 @@ body {
 }
 
 .container {
-  height: 100vh;
-  display: grid;
-  justify-items: center;
-  align-items: start;
-  grid-template-rows: 1fr 1fr 0.5;
-  grid-row-gap: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
   margin: auto;
 }
+
+.album-group {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: clamp(200px, 40vh, 400px);
+  width: 100%;
+  position: relative;
+}
+
 
 .title {
   font-size: 3rem;
@@ -48,11 +58,14 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: clamp(200px, 45vh, 450px);
+  width: 100%;
+  position: relative;
 }
 
 .album {
-  width: 30vh;
-  height: 30vh;
+  width: clamp(150px, 28vh, 280px);
+  height: clamp(150px, 28vh, 280px);
   position: absolute;
   aspect-ratio: 1/1;
   animation-duration: 1s;
