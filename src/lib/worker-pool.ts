@@ -1,5 +1,3 @@
-import logger from "../utils/logger";
-
 type Job = {
 	resolve: (b64: string | undefined) => void;
 	reject: (err: unknown) => void;
