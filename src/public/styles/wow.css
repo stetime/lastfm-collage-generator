@@ -28,7 +28,7 @@ body {
   display: grid;
   justify-items: center;
   align-items: start;
-  grid-template-rows: 1fr 1fr 0.5r;
+  grid-template-rows: 1fr 1fr 0.5;
   grid-row-gap: 0;
   margin: auto;
 }

@@ -1,33 +1,32 @@
-import { AxiosResponse } from "axios"
-export {}
+export {};
 
 declare global {
-  interface Album {
-    artist: string
-    title: string
-    image: string | undefined
-  }
+	interface Album {
+		artist: string;
+		title: string;
+		image: string | undefined;
+	}
 
-  interface User {
-    username: string
-    albums: Array<Album>
-    b64: string | undefined
-  }
+	interface User {
+		username: string;
+		albums: Array<Album>;
+		b64: string | undefined;
+	}
 
-  interface LastfmAlbum {
-    artist: {
-      name: string
-    }
-    name: string
-    image: {
-      size: string
-      "#text": string
-    }[]
-  }
+	interface LastfmAlbum {
+		artist: {
+			name: string;
+		};
+		name: string;
+		image: {
+			size: string;
+			"#text": string;
+		}[];
+	}
 
-  interface Fmdata {
-    topalbums: {
-      album: LastfmAlbum[]
-    }
-  }
+	interface Fmdata {
+		topalbums: {
+			album: LastfmAlbum[];
+		};
+	}
 }
