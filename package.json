@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "bun --hot run src/index.ts",
-    "start": "bun run src/index.ts"
+    "start": "bun run src/index.ts",
+    "build": "bun build src/client/main.ts --outdir src/public/js --target browser"
   },
   "keywords": [],
   "author": "Stephen Allen",

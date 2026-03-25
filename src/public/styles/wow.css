@@ -132,6 +132,11 @@ button:hover {
   background-color: #6e0000;
 }
 
+button:disabled {
+	background-color: #4a0000;
+	cursor: not-allowed;
+}
+
 @media only screen and (max-width: 799px) {
   .album {
     height: 25vh;
