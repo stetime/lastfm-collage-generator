@@ -21,8 +21,6 @@
     "pino-pretty": "^11.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.4.8",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4"
+    "@biomejs/biome": "2.4.8"
   }
 }
