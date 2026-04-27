@@ -1,23 +1,14 @@
-FROM node:18-alpine
+FROM oven/bun:alpine
 WORKDIR /app
 
 RUN apk add --update --no-cache \
-  make \
-  g++ \
-  jpeg-dev \
-  cairo-dev \
-  giflib-dev \
-  pango-dev \
-  libtool \
-  autoconf \
-  automake \
-  python3 \
+  libstdc++ \
   unifont 
 
-COPY package.json .
-RUN npm install
-COPY --chown=node:node . .
+COPY package.json bun.lock ./
+RUN bun install --frozen-lockfile
+COPY --chown=bun:bun . .
 EXPOSE 3000
-RUN npm run build
-USER node
-CMD ["node", "dist/index.js"]
+RUN bun run build
+USER bun
+CMD ["bun", "run", "src/index.ts"]
