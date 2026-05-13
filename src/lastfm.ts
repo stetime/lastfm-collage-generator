@@ -12,6 +12,10 @@ async function getUser(username: string, duration: string) {
 	});
 
 	if (!response.ok) {
+		if (response.status === 404) {
+			logger.debug(`getUser for ${username} returned a 404`);
+			return null;
+		}
 		throw new Error(`HTTP error: status ${response.status}`);
 	}
 
