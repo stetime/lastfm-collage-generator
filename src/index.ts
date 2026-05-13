@@ -15,7 +15,10 @@ if (!process.env.BASEURL) {
 	process.exit(1);
 }
 
-const cache = new TTLCache<string, User>({ ttl: 1000 * 60 * 60 * 24 });
+const cache = new TTLCache<string, User>({
+	max: Number(process.env.CACHE_SIZE) || 500,
+	ttl: 1000 * 60 * 60 * 24,
+});
 const validDurations = [
 	"7day",
 	"1month",
@@ -63,5 +66,14 @@ Bun.serve({
 	fetch: app.fetch,
 	port,
 });
+
+function shutdown() {
+	logger.fatal("received SIGINT/SIGTERM");
+	pool.shutdown();
+	process.exit(0);
+}
+
+process.on("SIGINT", shutdown);
+process.on("SIGTERM", shutdown);
 
 logger.info(`listening on port: ${port}`);
