@@ -16,7 +16,7 @@ if (!process.env.BASEURL) {
 }
 
 const cache = new TTLCache<string, User>({
-	max: Number(process.env.CACHE_SIZE) || 500,
+	max: Number(process.env.CACHE_SIZE ?? "500"),
 	ttl: 1000 * 60 * 60 * 24,
 });
 const validDurations = [
@@ -62,7 +62,11 @@ app.get("/api/:username/:duration", async (c) => {
 	return c.json(user);
 });
 
-Bun.serve({
+app.get("/health", async (c) => {
+	c.text("ok", 200);
+});
+
+const server = Bun.serve({
 	fetch: app.fetch,
 	port,
 });
@@ -70,6 +74,7 @@ Bun.serve({
 function shutdown() {
 	logger.fatal("received SIGINT/SIGTERM");
 	pool.shutdown();
+	server.stop();
 	process.exit(0);
 }
 
