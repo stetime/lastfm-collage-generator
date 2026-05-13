@@ -8,7 +8,7 @@ const logger = pino({
 			translateTime: "yyyy-mm-dd HH:MM:ss",
 		},
 	},
-	level: "debug",
+	level: process.env.LOG_LEVEL || "debug",
 });
 
 export default logger;
