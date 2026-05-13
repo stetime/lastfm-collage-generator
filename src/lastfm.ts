@@ -8,7 +8,7 @@ async function getUser(username: string, duration: string) {
 		`attempting to fetch last.fm api data for user: ${username} - duration: ${duration}`,
 	);
 	const response = await fetch(endpoint, {
-		signal: AbortSignal.timeout(5000),
+		signal: AbortSignal.timeout(10000),
 	});
 
 	if (!response.ok) {
